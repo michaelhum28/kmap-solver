@@ -24,7 +24,9 @@ function Dropdown() {
         ) : (
           <AiOutlineCaretUp className="h-8" />
         )}
-        {selectedItem && <span className="italic">{selectedItem.total}</span>}
+        {selectedItem && (
+          <span className="italic">{selectedItem.total}</span>
+        )}
       </button>
 
       {isOpen && (
@@ -40,6 +42,19 @@ function Dropdown() {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Render a different button when an item is selected and the dropdown is closed */}
+      {!isOpen && selectedItem && (
+        <button className="w-full mt-2 rounded tracking-wider hover:bg-gray-100">
+          Generate
+        </button>
+      )}
+
+      {!isOpen && !selectedItem && (
+        <button className="w-full mt-2 rounded tracking-wider hover:bg-gray-100 cursor-not-allowed opacity-50">
+          Generate
+        </button>
       )}
     </div>
   );
