@@ -24,9 +24,7 @@ function Dropdown() {
         ) : (
           <AiOutlineCaretUp className="h-8" />
         )}
-        {selectedItem && (
-          <span className="italic">{selectedItem.total}</span>
-        )}
+        {selectedItem && <span className="italic">{selectedItem.total}</span>}
       </button>
 
       {isOpen && (
