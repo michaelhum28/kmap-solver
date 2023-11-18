@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 function Changeall() {
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex flex-col">
       <div className="inline-flex rounded-md" role="group">

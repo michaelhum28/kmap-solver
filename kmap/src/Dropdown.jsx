@@ -5,6 +5,7 @@ import list from "./list.json";
 function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [generateClicked, setGenerateClicked] = useState(false);
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
@@ -12,7 +13,7 @@ function Dropdown() {
   };
 
   return (
-    <div className="relative flex flex-col w-[240px] h-[340px] rounded">
+    <div className="relative flex flex-col w-[240px] h-[240px] rounded">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="w-full flex items-center justify-between rounded tracking-wider hover:bg-gray-100"
@@ -55,6 +56,8 @@ function Dropdown() {
         <button className="w-full mt-2 rounded tracking-wider hover:bg-gray-100 cursor-not-allowed opacity-50">
           Generate
         </button>
+
+        
       )}
     </div>
   );
