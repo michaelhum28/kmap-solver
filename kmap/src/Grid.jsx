@@ -4,6 +4,7 @@ let rows_curr = 0;
 let cols_curr = 0;
 let var_count_curr = 0;
 let onesList = [];
+let XsList = [];
 let kmap_board = [
   [0,0,0,0],
   [0,0,0,0],
@@ -39,6 +40,10 @@ function Grid({ countX, countY, onGridItemClick, mode }) {
     newGridValues[index] = mode;
     setGridValues(newGridValues);
     onGridItemClick(newGridValues);
+
+    if (key === "0" && value === 0) {
+      window.location.reload();
+    }
   };
 
   const generateGridItems = () => {
@@ -140,8 +145,8 @@ function Changeall({ activeButton, onSetModeClick, updateOnesList }) {
         Calculate
       </button>
       {console.log("oneslist",onesList)}
-      {console.log("varcoutn ", var_count_curr)}
-      {showCalculate && <Kmap rows={rows_curr} cols={rows_curr} ones_list={onesList} var_count = {var_count_curr} Xs_list={[]} />}
+
+      {showCalculate && <Kmap rows={rows_curr} cols={rows_curr} ones_list={onesList} var_count = {var_count_curr} Xs_list={XsList} />}
     </div>
   );
 }
@@ -194,6 +199,89 @@ function App({rows, cols, vars_count}) {
       onesList.push(15);
       if (i==11 && newGridValues[i]===1)
       onesList.push(14);
+
+      if (i==0 && newGridValues[i]==="x")
+      XsList.push(0);
+      if (i==1 && newGridValues[i]==="x")
+      XsList.push(1);
+      if (i==2 && newGridValues[i]==="x")
+        XsList.push(3);
+      if (i==4 && newGridValues[i]==="x")
+      XsList.push(4);
+      if (i==5 && newGridValues[i]==="x")
+      XsList.push(5);
+      if (i==3 && newGridValues[i]==="x")
+      XsList.push(2);
+      if (i==6 && newGridValues[i]==="x")
+      XsList.push(7);
+      if (i==7 && newGridValues[i]==="x")
+      XsList.push(6);
+      if (i==12 && newGridValues[i]==="x")
+      XsList.push(8);
+      if (i==13 && newGridValues[i]==="x")
+      XsList.push(9);
+      if (i==14 && newGridValues[i]==="x")
+      XsList.push(11);
+      if (i==15 && newGridValues[i]==="x")
+      XsList.push(10);
+      if (i==8 && newGridValues[i]==="x")
+      XsList.push(12);
+      if (i==9 && newGridValues[i]==="x")
+      XsList.push(13);
+      if (i==10 && newGridValues[i]==="x")
+      XsList.push(15);
+      if (i==11 && newGridValues[i]==="x")
+      XsList.push(14);
+      
+
+      // if (newGridValues[i]===0)
+      // {
+      //     const indexToRemoveONES = onesList.indexOf(i);
+      //     const indexToRemoveXs = XsList.indexOf(i);
+      //     if (indexToRemoveONES !== -1) {
+              
+      //         onesList.splice(indexToRemoveXs, 1);
+      //     }
+      //     if (indexToRemoveXs !==-1)
+      //     {
+      //       XsList.splice(indexToRemoveONES, 1);
+      //     }
+      // }
+
+      // if (i==0 && newGridValues[i]===0)
+      // XsList.push(0);
+      // if (i==1 && newGridValues[i]===0)
+      // XsList.push(1);
+      // if (i==2 && newGridValues[i]===0)
+      //   XsList.push(3);
+      // if (i==4 && newGridValues[i]===0)
+      // XsList.push(4);
+      // if (i==5 && newGridValues[i]===0)
+      // XsList.push(5);
+      // if (i==3 && newGridValues[i]===0)
+      // XsList.push(2);
+      // if (i==6 && newGridValues[i]===0)
+      // XsList.push(7);
+      // if (i==7 && newGridValues[i]===0)
+      // XsList.push(6);
+      // if (i==12 && newGridValues[i]===0)
+      // XsList.push(8);
+      // if (i==13 && newGridValues[i]===0)
+      // XsList.push(9);
+      // if (i==14 && newGridValues[i]===0)
+      // XsList.push(11);
+      // if (i==15 && newGridValues[i]===0)
+      // XsList.push(10);
+      // if (i==8 && newGridValues[i]===0)
+      // XsList.push(12);
+      // if (i==9 && newGridValues[i]===0)
+      // XsList.push(13);
+      // if (i==10 && newGridValues[i]===0)
+      // XsList.push(15);
+      // if (i==11 && newGridValues[i]===0)
+      // XsList.push(14);
+
+      
 
     } 
   };

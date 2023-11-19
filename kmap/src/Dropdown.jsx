@@ -81,7 +81,7 @@ function Dropdown() {
       )}
 
       {/* Render the Grid component only when generateClicked is true */}
-      
+        
       {generateClicked && <App rows={rows} cols ={cols} vars_count = {vars_count} />}
       
       {!isOpen && !selectedItem && (  
