@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Kmap from "./Kmap.jsx";
-
+let rows = 0;
+let cols = 0;
 function Grid({ countX, countY, onGridItemClick, mode }) {
+  
   const [gridValues, setGridValues] = useState(Array(countX * countY).fill(0));
+
 
   const handleButtonClick = (index) => {
     const newGridValues = [...gridValues];
@@ -13,6 +16,7 @@ function Grid({ countX, countY, onGridItemClick, mode }) {
 
   const generateGridItems = () => {
   const gridItems = [];
+  
   for (let i = 0; i < countX; i++) {
     for (let j = 0; j < countY; j++) {
       const index = i * countY + j;
@@ -26,8 +30,11 @@ function Grid({ countX, countY, onGridItemClick, mode }) {
           {value}
         </button>
       );
+    
     }
   }
+  
+
   return gridItems;
 };
 
@@ -86,10 +93,10 @@ function Changeall({ activeButton, onSetModeClick }) {
   );
 }
 
-function App() {
+function App({rows, cols}) {
+
   const [mode, setMode] = useState(1);
   const [activeButton, setActiveButton] = useState(1);
-
   const handleGridItemClick = (newGridValues) => {
     // Handle the updated grid values as needed
     console.log("Grid values updated:", newGridValues);
@@ -104,7 +111,8 @@ function App() {
     <div>
       {/* Set countX to 2 and countY to 4 for a 2x4 grid */}
       {/* Set both countX and countY to 4 for a 4x4 grid */}
-      <Grid countX={4} countY={4} onGridItemClick={handleGridItemClick} mode={mode} />
+      
+      <Grid countX={cols} countY={rows} onGridItemClick={handleGridItemClick} mode={mode} />
       <Changeall
         activeButton={activeButton}
         onSetModeClick={handleSetModeClick}

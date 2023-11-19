@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import list from "./list.json";
-import Grid from "./Grid"; // Import the Grid component
+// import Grid from "./Grid"; // Import the Grid component
+import App from "./Grid";
 
+let rows = -1;
+let cols = -1;
 function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -16,8 +19,10 @@ function Dropdown() {
   const handleGenerateClick = () => {
     // Perform any actions you need when the "Generate" button is clicked
     if (selectedItem && selectedItem.total === "4x4") {
+       rows = 4; cols = 4;
       setGenerateClicked(true);
-    } else if (selectedItem && selectedItem.total === "2x4"){
+    } else if (selectedItem && selectedItem.total === "4x2"){
+      rows =2; cols = 4;
       setGenerateClicked(true);
     } else {
       setGenerateClicked(false);
@@ -28,7 +33,6 @@ function Dropdown() {
     setIsOpen((prev) => !prev);
     setGenerateClicked(false); // Reset generateClicked when dropdown is opened
   };
-
   return (
     <div className="relative flex flex-col w-[240px] h-[240px] rounded">
       <button
@@ -74,7 +78,8 @@ function Dropdown() {
       )}
 
       {/* Render the Grid component only when generateClicked is true */}
-      {generateClicked && <Grid countX={selectedItem.x} countY ={selectedItem.y} />}
+
+      {generateClicked && <App rows={rows} cols ={cols} />}
       
       {!isOpen && !selectedItem && (  
         <button className="w-full mt-2 rounded tracking-wider hover:bg-gray-100 cursor-not-allowed opacity-50">
