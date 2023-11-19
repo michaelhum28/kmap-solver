@@ -1,20 +1,36 @@
 import { useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import list from "./list.json";
+import Grid from "./Grid"; // Import the Grid component
 
 function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [generateClicked, setGenerateClicked] = useState(false);
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
     setIsOpen(false);
   };
 
+  const handleGenerateClick = () => {
+    // Perform any actions you need when the "Generate" button is clicked
+    if (selectedItem && selectedItem.total === "4x4") {
+      setGenerateClicked(true);
+    } else {
+      setGenerateClicked(false);
+    }
+  };
+
+  const handleDropdownClick = () => {
+    setIsOpen((prev) => !prev);
+    setGenerateClicked(false); // Reset generateClicked when dropdown is opened
+  };
+
   return (
-    <div className="relative flex flex-col w-[240px] h-[340px] rounded">
+    <div className="relative flex flex-col w-[240px] h-[240px] rounded">
       <button
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={handleDropdownClick}
         className="w-full flex items-center justify-between rounded tracking-wider hover:bg-gray-100"
       >
         {"Variable Count: "}
@@ -29,6 +45,7 @@ function Dropdown() {
         )}
       </button>
 
+      {/* Render dropdown content only if isOpen is true */}
       {isOpen && (
         <div className="absolute top-10 flex flex-col items-start w-full">
           {list.map((item, i) => (
@@ -42,6 +59,25 @@ function Dropdown() {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Render a different button when an item is selected and the dropdown is closed */}
+      {!isOpen && selectedItem && (
+        <button
+          onClick={handleGenerateClick}
+          className="w-full mt-2 rounded tracking-wider hover:bg-gray-100"
+        >
+          Generate
+        </button>
+      )}
+
+      {/* Render the Grid component only when generateClicked is true */}
+      {generateClicked && <Grid count={selectedItem.count} />}
+      
+      {!isOpen && !selectedItem && (  
+        <button className="w-full mt-2 rounded tracking-wider hover:bg-gray-100 cursor-not-allowed opacity-50">
+          Generate
+        </button>
       )}
     </div>
   );
