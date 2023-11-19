@@ -1,5 +1,5 @@
 import Dropdown from "./Dropdown.jsx"
-import Changeall from "./Changeall.jsx";
+// import Changeall from "./Changeall.jsx";
 import './index.css'
 import './App.css'
 // import Kmap from "./Kmap.jsx";
@@ -12,12 +12,6 @@ function App() {
       <div className="flex flex-col items-center">
         <Dropdown/>
 
-        
-        <Grid/>
-    
-        <div className="p-20">
-        <Changeall/>
-        </div>
       </div>
     </>
   );
