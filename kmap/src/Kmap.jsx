@@ -47,22 +47,22 @@ const Kmap = (props) => {
   const ones_list = props.ones_list;
   const Xs_list = props.Xs_list;
 
-  let smallestAnswer = "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+  let smallestLength = 999;
+  let smallestAnswer = "MICHAELHUM_FEIYULIN_CHRISTOPHERLIT_MICHAELHUM_FEIYULIN_CHRISTOPHERLIT_MICHAELHUM_FEIYULIN_CHRISTOPHERLIT_MICHAELHUM_FEIYULIN_CHRISTOPHERLIT_MICHAELHUM_FEIYULIN_CHRISTOPHERLIT_MICHAELHUM_FEIYULIN_CHRISTOPHERLIT";
 
   // WORK HERE
-    // init indexes for 1s
-    const indexes = [];
+  // init indexes for 1s
+  const indexes = [];
 
-   for(let i=0;i<16;i++)
-   {
-        if (ones_list.includes(i))
-            indexes.push(1)
-        else
-            indexes.push(0) 
-   } 
+  for (let i = 0; i < 16; i++) {
+    if (ones_list.includes(i))
+      indexes.push(1)
+    else
+      indexes.push(0)
+  }
 
   // Custom methods
-  function initializeKmap(){
+  function initializeKmap() {
     const kmap = [];
     for (let r = 0; r < rows; r++) {
       const temp = [];
@@ -77,7 +77,7 @@ const Kmap = (props) => {
     return kmap;
   };
 
-  function allOnes(i, j, width, length, indexes, k_indexes){
+  function allOnes(i, j, width, length, indexes, k_indexes) {
     for (let x = i; x < i + width; ++x)
       for (let y = j; y < j + length; ++y)
         if (indexes[k_indexes[((x + 4) % 4) * 4 + ((y + 4) % 4)]] === 0)
@@ -86,20 +86,20 @@ const Kmap = (props) => {
     return true;
   };
 
-  function setVisited(i, j, width, length, vis){
+  function setVisited(i, j, width, length, vis) {
     for (let x = i; x < i + width; ++x)
       for (let y = j; y < j + length; ++y)
         vis[(x + 4) % 4][(y + 4) % 4][width][length] = true;
   };
 
-  function visited(i, j, width, length, vis){
+  function visited(i, j, width, length, vis) {
     for (let x = 1; x < 5; ++x)
       for (let y = 1; y < 5; ++y)
         if (vis[i][j][x][y]) return true;
     return false;
   };
 
-  function check(width, length, indexes, k_indexes, vis){
+  function check(width, length, indexes, k_indexes, vis) {
     for (let i = 0; i < 4; ++i) {
       for (let j = 0; j < 4; ++j) {
         if (!visited(i, j, width, length, vis)) {
@@ -130,7 +130,7 @@ const Kmap = (props) => {
   };
 
 
-  function gen_list_of_implicants(groupNumber, i, j, width, length, k_indexes){
+  function gen_list_of_implicants(groupNumber, i, j, width, length, k_indexes) {
     let res = [];
     for (let x = i; x < i + width; ++x) {
       for (let y = j; y < j + length; ++y) {
@@ -140,44 +140,63 @@ const Kmap = (props) => {
     return res;
   };
 
-  
-  function get_boolean_expression(){
+
+  function get_boolean_expression() {
 
     //Loop for every combination in the array "Xs_list"
     //In the loop, create a temp array and make it equal to the pre existing array called "indexes" and push that combination in the temp array
     //Call the method "real_get_boolean_expression" and pass in the temp array
 
-      function generateCombinations(currentIndex, currentCombination) {
-          if (currentIndex === Xs_list.length) {
-              // Sort the current combination before processing
-              const sortedCombination = [...currentCombination].sort((a, b) => a - b);
-              const indexesWithCare = indexes.concat(sortedCombination);
-              
-              let temp = real_get_boolean_expression(indexesWithCare);
-              temp = temp.replace(/'/g, ''); //Replaces apostrophes with nothing
+    function processCombinations(arr, callback, prefix = [], start = 0) {
+      const n = arr.length;
+      
+      for (let i = start; i < n; i++) {
+        // Include the current element in the combination
+        const newPrefix = prefix.concat(arr[i]);
+       
+        
+       
+        const indexesWithCare = JSON.parse(JSON.stringify(indexes));
+      
+        for (let i = 0; i < newPrefix.length; i++) {
 
-              //Compares if the indexes with the current combination of don't care values makes the boolean expression smaller than the current smallest one
-              if (temp.length < smallestAnswer.length) {
+          indexesWithCare[newPrefix[i]] = 1;
 
-                smallestAnswer = temp;
+        }
+       
+        // Send the combination to the callback method
+        let temp = callback(indexesWithCare);
+        let tempNoApostrophes = temp.replace(/'/g, ''); //Replaces apostrophes with nothing
+        //console.log(temp)
 
-              }
+        if (temp.length != 0) {
 
-              return;
-          }
-  
-          generateCombinations(currentIndex + 1, [...currentCombination, Xs_list[currentIndex]]);
-          generateCombinations(currentIndex + 1, currentCombination);
+        //Compares if the indexes with the current combination of don't care values makes the boolean expression smaller than the current smallest one
+        if (tempNoApostrophes.length < smallestLength) {
+    
+          smallestAnswer = temp;
+          smallestLength = tempNoApostrophes.length;
+
+         
+        }
+
       }
-  
-      generateCombinations(0, []);
-      return smallestAnswer;
+    
+        // Recursively generate combinations with the remaining elements
+        processCombinations(arr, callback, newPrefix, i + 1);
+      }
+    }
+    console.log("TEST")
+    
+
+    smallestAnswer = real_get_boolean_expression(indexes);
+    smallestLength = smallestAnswer.replace(/'/g, '').length;
+
+    processCombinations(Xs_list, real_get_boolean_expression);
+
+    return smallestAnswer;
   }
 
-  
-  
-    
-  
 
   // this method generates the final boolean expression i.e. the answer
   function real_get_boolean_expression(indexesWithCare) {
@@ -188,11 +207,11 @@ const Kmap = (props) => {
         xy = check(k_sizes[i][0], k_sizes[i][1], indexesWithCare, k_indexes, vis);
         if (xy[0] !== void_state && xy[1] !== void_state) {
           let temp = gen_list_of_implicants(groupCounter++, xy[0], xy[1], k_sizes[i][0], k_sizes[i][1], k_indexes);
-          console.log("temp" + temp)
+      
           res += findEquation(temp, 4);
           res += " + ";
         }
-      } 
+      }
       while (xy[0] !== void_state && xy[1] !== void_state);
     }
 
@@ -203,7 +222,7 @@ const Kmap = (props) => {
 
 
   // SOP
-  function findEquation(implicant, numVariables){
+  function findEquation(implicant, numVariables) {
     const values = new Array(implicant.length);
     let tempValue = "";
     let answer = "";
@@ -288,7 +307,7 @@ const Kmap = (props) => {
 
   // coordinate = 0,1,2,3,4,5, etc.
   // numVariables = 3,4
-  function equation(coordinate, numVariables){
+  function equation(coordinate, numVariables) {
     const three = [
       ["EFG", "EFC", "EBC", "EBG"],
       ["AFG", "AFC", "ABC", "ABG"]
@@ -358,12 +377,12 @@ const Kmap = (props) => {
     }
   };
 
-//   const [kmap, setKmap] = useState(initializeKmap());
+  //   const [kmap, setKmap] = useState(initializeKmap());
 
   return (
     <div>
-        {/* Display boolean expression */}
-        <p>Boolean Expression test: {get_boolean_expression().slice(0,-3)}</p>
+      {/* Display boolean expression */}
+      <p>Boolean Expression test: {get_boolean_expression().slice(0, -3)}</p>
     </div>
   );
 };
