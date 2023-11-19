@@ -10,14 +10,14 @@ const Kmap = (props) => {
     "1,1": 5,
     "1,3": 6,
     "1,2": 7,
-    "2,0": 8,
-    "2,1": 9,
-    "2,3": 10,
-    "2,2": 11,
-    "3,0": 12,
-    "3,1": 13,
-    "3,3": 14,
-    "5,2": 15,
+    "2,0": 12,
+    "2,1": 13,
+    "2,3": 14,
+    "2,2": 15,
+    "3,0": 8,
+    "3,1": 9,
+    "3,3": 10,
+    "3,2": 11,
   };
 
   const void_state = -10;
@@ -46,6 +46,8 @@ const Kmap = (props) => {
   const Xs = props.Xs;
   const ones_list = props.ones_list;
   const Xs_list = props.Xs_list;
+
+  let smallestAnswer = "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
 
   // WORK HERE
     // init indexes for 1s
@@ -138,12 +140,52 @@ const Kmap = (props) => {
     return res;
   };
 
-  // this method generates the final boolean expression i.e. the answer
+  
   function get_boolean_expression(){
+
+    //Loop for every combination in the array "Xs_list"
+    //In the loop, create a temp array and make it equal to the pre existing array called "indexes" and push that combination in the temp array
+    //Call the method "real_get_boolean_expression" and pass in the temp array
+
+      function generateCombinations(currentIndex, currentCombination) {
+          if (currentIndex === Xs_list.length) {
+              // Sort the current combination before processing
+              const sortedCombination = [...currentCombination].sort((a, b) => a - b);
+              const indexesWithCare = indexes.concat(sortedCombination);
+              
+              let temp = real_get_boolean_expression(indexesWithCare);
+              temp = temp.replace(/'/g, ''); //Replaces apostrophes with nothing
+
+              //Compares if the indexes with the current combination of don't care values makes the boolean expression smaller than the current smallest one
+              if (temp.length < smallestAnswer.length) {
+
+                smallestAnswer = temp;
+
+              }
+
+              return;
+          }
+  
+          generateCombinations(currentIndex + 1, [...currentCombination, Xs_list[currentIndex]]);
+          generateCombinations(currentIndex + 1, currentCombination);
+      }
+  
+      generateCombinations(0, []);
+      return smallestAnswer;
+  }
+
+  
+  
+    
+  
+
+  // this method generates the final boolean expression i.e. the answer
+  function real_get_boolean_expression(indexesWithCare) {
     let res = "";
+
     for (let i = 0, e = k_sizes.length; i < e; ++i) {
       do {
-        xy = check(k_sizes[i][0], k_sizes[i][1], indexes, k_indexes, vis);
+        xy = check(k_sizes[i][0], k_sizes[i][1], indexesWithCare, k_indexes, vis);
         if (xy[0] !== void_state && xy[1] !== void_state) {
           let temp = gen_list_of_implicants(groupCounter++, xy[0], xy[1], k_sizes[i][0], k_sizes[i][1], k_indexes);
           console.log("temp" + temp)
@@ -153,6 +195,9 @@ const Kmap = (props) => {
       } 
       while (xy[0] !== void_state && xy[1] !== void_state);
     }
+
+
+
     return res;
   };
 
@@ -291,21 +336,23 @@ const Kmap = (props) => {
         return "EBCH";
       } else if (coordinate === 7) {
         return "EBCD";
-      } else if (coordinate === 8) {
-        return "ABGH";
-      } else if (coordinate === 9) {
-        return "ABGD";
-      } else if (coordinate === 10) {
-        return "ABCH";
-      } else if (coordinate === 11) {
-        return "ABCD";
+
       } else if (coordinate === 12) {
-        return "AFGH";
+        return "ABGH";
       } else if (coordinate === 13) {
-        return "AFGD";
+        return "ABGD";
       } else if (coordinate === 14) {
-        return "AFCH";
+        return "ABCH";
       } else if (coordinate === 15) {
+        return "ABCD";
+
+      } else if (coordinate === 8) {
+        return "AFGH";
+      } else if (coordinate === 9) {
+        return "AFGD";
+      } else if (coordinate === 10) {
+        return "AFCH";
+      } else if (coordinate === 11) {
         return "AFCD";
       }
     }
@@ -316,7 +363,7 @@ const Kmap = (props) => {
   return (
     <div>
         {/* Display boolean expression */}
-        <p>Boolean Expression: {get_boolean_expression().slice(0,-3)}</p>
+        <p>Boolean Expression test: {get_boolean_expression().slice(0,-3)}</p>
     </div>
   );
 };
