@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Kmap from "./Kmap.jsx";
 let rows_curr = 0;
 let cols_curr = 0;
+let var_count_curr = 0;
 let onesList = [];
 let kmap_board = [
   [0,0,0,0],
@@ -81,24 +82,24 @@ function Changeall({ activeButton, onSetModeClick, updateOnesList }) {
     onSetModeClick(key, value);
 
     // Update onesList
-    updateOnesList(key, value);
+    // updateOnesList(key, value);
   };
 
   const handleCalculateClicked = () => {
     setShowCalculate(true);
   };
 
-  for(let i=0;i<kmap_board.length;i++)
-  {
-    for(let j=0;j<kmap_board[i].length;j++)
-    {
-      if (kmap_board[i][j]===1)
-      {
-        const coord = i+","+j
-        onesList.push(coord_to_cell[coord])
-      }
-    }
-  }
+  // for(let i=0;i<kmap_board.length;i++)
+  // {
+  //   for(let j=0;j<kmap_board[i].length;j++)
+  //   {
+  //     if (kmap_board[i][j]===1)
+  //     {
+  //       const coord = i+","+j
+  //       onesList.push(coord_to_cell[coord])
+  //     }
+  //   }
+  // }
 
   return (
     <div className="flex flex-col">
@@ -138,15 +139,18 @@ function Changeall({ activeButton, onSetModeClick, updateOnesList }) {
       >
         Calculate
       </button>
-      {console.log("asd",onesList)}
-      {showCalculate && <Kmap rows={rows_curr} cols={rows_curr} ones_list={onesList} Xs_list={[]} />}
+      {console.log("oneslist",onesList)}
+      {console.log("varcoutn ", var_count_curr)}
+      {showCalculate && <Kmap rows={rows_curr} cols={rows_curr} ones_list={onesList} var_count = {var_count_curr} Xs_list={[]} />}
     </div>
   );
 }
 
-function App({rows, cols}) {
+function App({rows, cols, vars_count}) {
   rows_curr = rows;
   cols_curr =cols
+  var_count_curr = vars_count
+  
   const [mode, setMode] = useState(1);
   const [activeButton, setActiveButton] = useState(1);
   const handleGridItemClick = (newGridValues) => {
@@ -155,8 +159,42 @@ function App({rows, cols}) {
 
     for (let i=0;i<newGridValues.length;i++)
     {
-      if (newGridValues[i]===1)
-        onesList.push(i);
+      // if (newGridValues[i]===1)
+
+      //   onesList.push(i);
+      if (i==0 && newGridValues[i]===1)
+      onesList.push(0);
+      if (i==1 && newGridValues[i]===1)
+      onesList.push(1);
+      if (i==2 && newGridValues[i]===1)
+        onesList.push(3);
+      if (i==4 && newGridValues[i]===1)
+      onesList.push(4);
+      if (i==5 && newGridValues[i]===1)
+      onesList.push(5);
+      if (i==3 && newGridValues[i]===1)
+      onesList.push(2);
+      if (i==6 && newGridValues[i]===1)
+      onesList.push(7);
+      if (i==7 && newGridValues[i]===1)
+      onesList.push(6);
+      if (i==12 && newGridValues[i]===1)
+      onesList.push(8);
+      if (i==13 && newGridValues[i]===1)
+      onesList.push(9);
+      if (i==14 && newGridValues[i]===1)
+      onesList.push(11);
+      if (i==15 && newGridValues[i]===1)
+      onesList.push(10);
+      if (i==8 && newGridValues[i]===1)
+      onesList.push(12);
+      if (i==9 && newGridValues[i]===1)
+      onesList.push(13);
+      if (i==10 && newGridValues[i]===1)
+      onesList.push(15);
+      if (i==11 && newGridValues[i]===1)
+      onesList.push(14);
+
     } 
   };
 
@@ -183,7 +221,7 @@ function App({rows, cols}) {
       <Changeall
         activeButton={activeButton}
         onSetModeClick={handleSetModeClick}
-        updateOnesList={updateOnesList}
+        // updateOnesList={updateOnesList}
       />
     </div>
   );

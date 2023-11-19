@@ -40,6 +40,7 @@ const Kmap = (props) => {
   let groupCounter = 1;
   let xy = [void_state, void_state];
 
+  const vars_count = props.var_count
   const rows = props.rows;
   const cols = props.cols;
   const ones = props.ones;
@@ -208,7 +209,7 @@ const Kmap = (props) => {
         if (xy[0] !== void_state && xy[1] !== void_state) {
           let temp = gen_list_of_implicants(groupCounter++, xy[0], xy[1], k_sizes[i][0], k_sizes[i][1], k_indexes);
       
-          res += findEquation(temp, 4);
+          res += findEquation(temp, vars_count);
           res += " + ";
         }
       }

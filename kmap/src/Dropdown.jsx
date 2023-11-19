@@ -6,6 +6,7 @@ import App from "./Grid";
 
 let rows = -1;
 let cols = -1;
+let vars_count = -1;
 function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -20,9 +21,11 @@ function Dropdown() {
     // Perform any actions you need when the "Generate" button is clicked
     if (selectedItem && selectedItem.total === "4x4") {
        rows = 4; cols = 4;
+       vars_count = 4
       setGenerateClicked(true);
     } else if (selectedItem && selectedItem.total === "4x2"){
       rows =2; cols = 4;
+      vars_count = 3;
       setGenerateClicked(true);
     } else {
       setGenerateClicked(false);
@@ -78,8 +81,8 @@ function Dropdown() {
       )}
 
       {/* Render the Grid component only when generateClicked is true */}
-
-      {generateClicked && <App rows={rows} cols ={cols} />}
+      
+      {generateClicked && <App rows={rows} cols ={cols} vars_count = {vars_count} />}
       
       {!isOpen && !selectedItem && (  
         <button className="w-full mt-2 rounded tracking-wider hover:bg-gray-100 cursor-not-allowed opacity-50">
