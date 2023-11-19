@@ -17,6 +17,8 @@ function Dropdown() {
     // Perform any actions you need when the "Generate" button is clicked
     if (selectedItem && selectedItem.total === "4x4") {
       setGenerateClicked(true);
+    } else if (selectedItem && selectedItem.total === "2x4"){
+      setGenerateClicked(true);
     } else {
       setGenerateClicked(false);
     }
@@ -72,7 +74,7 @@ function Dropdown() {
       )}
 
       {/* Render the Grid component only when generateClicked is true */}
-      {generateClicked && <Grid count={selectedItem.count} />}
+      {generateClicked && <Grid countX={selectedItem.x} countY ={selectedItem.y} />}
       
       {!isOpen && !selectedItem && (  
         <button className="w-full mt-2 rounded tracking-wider hover:bg-gray-100 cursor-not-allowed opacity-50">

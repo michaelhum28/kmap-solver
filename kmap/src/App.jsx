@@ -11,11 +11,8 @@ function App() {
       <div className="flex flex-col items-center">
         <Dropdown/>
 
-        <Kmap rows={4} cols={4} ones_list = {[0,4,12,8,7]} Xs_list = {[]} />
+        {/* <Kmap rows={4} cols={4} ones_list = {[0,4,12,8,7]} Xs_list = {[]} /> */}
 
-        <div className="p-20">
-        <Changeall/>
-        </div>
       </div>
     </>
   );
