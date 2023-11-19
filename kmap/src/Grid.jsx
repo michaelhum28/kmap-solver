@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Kmap from "./Kmap.jsx";
-let rows = 0;
-let cols = 0;
+let rows_curr = 0;
+let cols_curr = 0;
 function Grid({ countX, countY, onGridItemClick, mode }) {
   
   const [gridValues, setGridValues] = useState(Array(countX * countY).fill(0));
@@ -87,14 +87,15 @@ function Changeall({ activeButton, onSetModeClick }) {
 >
   Calculate
 </button>
-{showCalculate && <Kmap rows={4} cols={4} ones_list={[0, 4, 12, 8, 7]} Xs_list={[]} />}
+{showCalculate && <Kmap rows={rows_curr} cols={rows_curr} ones_list={[0, 4, 12, 8, 7]} Xs_list={[]} />}
 
     </div>
   );
 }
 
 function App({rows, cols}) {
-
+  rows_curr = rows;
+  cols_curr =cols
   const [mode, setMode] = useState(1);
   const [activeButton, setActiveButton] = useState(1);
   const handleGridItemClick = (newGridValues) => {
