@@ -12,24 +12,24 @@ function Grid({ countX, countY, onGridItemClick, mode }) {
   };
 
   const generateGridItems = () => {
-    const gridItems = [];
-    for (let i = 0; i < countY; i++) {
-      for (let j = 0; j < countX; j++) {
-        const index = i * countX + j;
-        const value = gridValues[index];
-        gridItems.push(
-          <button
-            key={index}
-            className="grid border-2 border-black w-[50px] h-[50px]"
-            onClick={() => handleButtonClick(index)}
-          >
-            {value}
-          </button>
-        );
-      }
+  const gridItems = [];
+  for (let i = 0; i < countX; i++) {
+    for (let j = 0; j < countY; j++) {
+      const index = i * countY + j;
+      const value = gridValues[index];
+      gridItems.push(
+        <button
+          key={index}
+          className="grid grid-cols-4 border-2 border-black w-[50px] h-[50px]"
+          onClick={() => handleButtonClick(index)}
+        >
+          {value}
+        </button>
+      );
     }
-    return gridItems;
-  };
+  }
+  return gridItems;
+};
 
   return (
     <div className={`grid grid-cols-${countX} p-6`}>{generateGridItems()}</div>
@@ -114,4 +114,3 @@ function App() {
 }
 
 export default App;
-
