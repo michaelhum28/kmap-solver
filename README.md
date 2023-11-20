@@ -1,4 +1,4 @@
-**Karnaugh Map Solver for AliceHacks hackathon**
+# **Karnaugh Map Solver for AliceHacks hackathon**
 
 The inspiration for Karnaugh Map Solver project stemmed from the frustration of spending hours manually simplifying Karnaugh Maps for digital circuits. Recognizing the need for a more efficient solution, the idea to create an online tool that automates the process was born.
 
