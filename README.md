@@ -1,6 +1,6 @@
 # **Karnaugh Map Solver for AliceHacks hackathon**
 
-The inspiration for [Karnaugh Map Solver](michaelhum28.github.io/kmap-solver/) project stemmed from the frustration of spending hours manually simplifying Karnaugh Maps for digital circuits. Recognizing the need for a more efficient solution, the idea to create an online tool that automates the process was born.
+The inspiration for [Karnaugh Map Solver](https://michaelhum28.github.io/kmap-solver/) project stemmed from the frustration of spending hours manually simplifying Karnaugh Maps for digital circuits. Recognizing the need for a more efficient solution, the idea to create an online tool that automates the process was born.
 
 K-Map Solver was crafted using a combination of Vite, React (for the frontend), and Tailwind CSS (for styling). JavaScript played a crucial role in integrating these technologies seamlessly, creating a cohesive and responsive user experience.
 
